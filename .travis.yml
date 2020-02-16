@@ -6,4 +6,14 @@ before_install:
   - docker build -t test-image -f Dockerfile.dev .
 
 script:
-  - docker run -e CI=true test-image npm run test 
+  - docker run -e CI=true test-image npm run test
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "docker-react"
+  env: "DockerReact-env"
+  bucket_name: "elasticbeanstalk-us-east-2-483734816787"
+  bucket_path: "docker-react"
+  on:
+    branch: master
